@@ -1,5 +1,4 @@
-Certainly! Here's an expanded README file with detailed explanations of the existing features in the app and the future features that are planned to be added:
-
+So here we go
 ---
 
 # ATC (All Things Chuka) - Android App
