@@ -4,7 +4,7 @@ Certainly! Here's an expanded README file with detailed explanations of the exis
 
 # ATC (All Things Chuka) - Android App
 
-![App Logo](link-to-your-app-logo.png)
+![App Logo](logo.png)
 
 ## Problem Statement
 
