@@ -1,6 +1,9 @@
+import 'package:atc/src/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hostelfinder_v2/src/constants/colors.dart';
+
+
+
 class HostelFinderController extends GetxController {
   // Text editing and focus management
   final TextEditingController searchController = TextEditingController();
@@ -9,7 +12,7 @@ class HostelFinderController extends GetxController {
 
   // Filter management
   final RxInt filterActiveIndex = 0.obs;
-  final RxInt currentPageDotIndex=0.obs;
+  final RxInt currentPageDotIndex = 0.obs;
 
   // Box shadow for UI consistency
   List<BoxShadow> get boxShadow {
@@ -42,5 +45,14 @@ class HostelFinderController extends GetxController {
     });
   }
 
+  void goToReview() {
+    Get.toNamed(
+      "/reviewPage",
+    );
+  }
+
+  void goBack() {
+    Get.back();
+  }
 
 }

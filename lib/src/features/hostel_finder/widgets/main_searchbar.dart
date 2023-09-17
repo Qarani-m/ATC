@@ -1,11 +1,12 @@
+import 'package:atc/src/constants/image_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hostelfinder_v2/src/constants/colors.dart';
-import 'package:hostelfinder_v2/src/constants/image_strings.dart';
-import 'package:hostelfinder_v2/src/features/hostel_finder/controller/hostel_finder_controller.dart';
+import 'package:atc/src/features/hostel_finder/controller/hostel_finder_controller.dart';
+import 'package:atc/src/constants/colors.dart';
+
 
 class SearchField extends StatelessWidget {
   const SearchField({
