@@ -1,4 +1,7 @@
 import 'package:atc/src/constants/colors.dart';
+import 'package:atc/src/features/authentication/screens/forgot_password.dart';
+import 'package:atc/src/features/authentication/screens/login.dart';
+import 'package:atc/src/features/authentication/screens/signup.dart';
 import 'package:atc/src/features/hostel_finder/screen/home_page.dart';
 import 'package:atc/src/features/hostel_finder/screen/hostel_details.dart';
 import 'package:atc/src/features/hostel_finder/screen/review_page.dart';
@@ -34,11 +37,14 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppThemes.lightTheme(),
         initialBinding: AppBindings(),
-        initialRoute: "/",
+        initialRoute: "/forgotPassword",
         getPages: [
           GetPage(name: "/", page: () => HostelFinderHome()),
           GetPage(name: "/hostelDetails", page: () => const HostelDetails()),
           GetPage(name: "/reviewPage", page: () =>  ReviewPage()),
+          GetPage(name: "/login", page: () =>  Login()),
+          GetPage(name: "/signUp", page: () =>  SignUp()),
+          GetPage(name: "/forgotPassword", page: () =>  ForgotPassword()),
         ],
       ),
     );
