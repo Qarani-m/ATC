@@ -120,7 +120,7 @@ class HostelDetails extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       SizedBox(
-                        height: 20.h,
+                        height: 10.h,
                       ),
                       Container(
                         height: 50.h,
@@ -151,7 +151,7 @@ class HostelDetails extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 20.h,
+                        height: 10.h,
                       ),
                       Text(
                         AppStrings.nacaryGuestHouse,
