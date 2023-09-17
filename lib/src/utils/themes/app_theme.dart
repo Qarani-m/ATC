@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hostelfinder_v2/src/constants/colors.dart';
+import 'package:atc/src/constants/colors.dart';
 
 class AppThemes {
   static ThemeData lightTheme() {

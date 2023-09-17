@@ -1,4 +1,4 @@
-package com.example.hostelfinder_v2
+package com.example.atc
 
 import io.flutter.embedding.android.FlutterActivity
 

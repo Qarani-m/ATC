@@ -1,13 +1,15 @@
+import 'package:atc/src/constants/colors.dart';
+import 'package:atc/src/features/hostel_finder/screen/home_page.dart';
+import 'package:atc/src/features/hostel_finder/screen/hostel_details.dart';
+import 'package:atc/src/features/hostel_finder/screen/review_page.dart';
+import 'package:atc/src/utils/bindings/app_bindings.dart';
+import 'package:atc/src/utils/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hostelfinder_v2/src/constants/colors.dart';
-import 'package:hostelfinder_v2/src/features/hostel_finder/screen/home_page.dart';
-import 'package:hostelfinder_v2/src/features/hostel_finder/screen/hostel_details.dart';
-import 'package:hostelfinder_v2/src/utils/bindings/app_bindings.dart';
-import 'package:hostelfinder_v2/src/utils/themes/app_theme.dart';
+
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -35,7 +37,8 @@ class MyApp extends StatelessWidget {
         initialRoute: "/",
         getPages: [
           GetPage(name: "/", page: () => HostelFinderHome()),
-          GetPage(name: "/hostelDetails", page: () => const HostelDetails())
+          GetPage(name: "/hostelDetails", page: () => const HostelDetails()),
+          GetPage(name: "/reviewPage", page: () =>  ReviewPage()),
         ],
       ),
     );

@@ -1,14 +1,16 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:atc/src/constants/text_strings.dart';
+import 'package:atc/src/features/hostel_finder/controller/hostel_finder_controller.dart';
+import 'package:atc/src/features/hostel_finder/widgets/main_filter.dart';
+import 'package:atc/src/features/hostel_finder/widgets/main_hostel.dart';
+import 'package:atc/src/features/hostel_finder/widgets/main_searchbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hostelfinder_v2/src/constants/colors.dart';
-import 'package:hostelfinder_v2/src/constants/text_strings.dart';
-import 'package:hostelfinder_v2/src/features/hostel_finder/controller/hostel_finder_controller.dart';
-import 'package:hostelfinder_v2/src/features/hostel_finder/widgets/main_filter.dart';
-import 'package:hostelfinder_v2/src/features/hostel_finder/widgets/main_hostel.dart';
-import 'package:hostelfinder_v2/src/features/hostel_finder/widgets/main_searchbar.dart';
+import 'package:atc/src/constants/colors.dart';
+
+
 
 class HostelFinderHome extends StatelessWidget {
   HostelFinderHome({super.key});

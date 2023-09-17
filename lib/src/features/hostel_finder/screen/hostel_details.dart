@@ -1,12 +1,13 @@
+import 'package:atc/src/constants/image_strings.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hostelfinder_v2/src/constants/colors.dart';
-import 'package:hostelfinder_v2/src/constants/image_strings.dart';
-import 'package:hostelfinder_v2/src/constants/text_strings.dart';
-import 'package:hostelfinder_v2/src/features/hostel_finder/controller/hostel_finder_controller.dart';
+import 'package:atc/src/constants/text_strings.dart';
+import 'package:atc/src/features/hostel_finder/controller/hostel_finder_controller.dart';
+import 'package:atc/src/constants/colors.dart';
+
+
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HostelDetails extends StatelessWidget {
@@ -14,19 +15,13 @@ class HostelDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-          statusBarColor: AppColors.primaryColor,
-          statusBarIconBrightness: Brightness.dark),
-    );
-    PageController controller = PageController();
     final hostelFinderController = Get.find<HostelFinderController>();
 
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: Column(
         children: [
-          Container(
+          SizedBox(
             height: 740.h,
             child: SingleChildScrollView(
               child: Padding(
@@ -51,7 +46,6 @@ class HostelDetails extends StatelessWidget {
                                     height: 350.h,
                                     width: 390.w,
                                     decoration: BoxDecoration(
-                                        color: Colors.red,
                                         borderRadius:
                                             BorderRadius.circular(40.r),
                                         image: const DecorationImage(
@@ -65,21 +59,29 @@ class HostelDetails extends StatelessWidget {
                           Positioned(
                             left: 15.w,
                             top: 10.h,
-                            child: CircleAvatar(
-                              radius: 25.r,
-                              backgroundColor: AppColors.whiteColor,
-                              child: const Icon(Icons.arrow_back),
+                            child: GestureDetector(
+                              onTap: (){hostelFinderController.goBack();},
+                              child: CircleAvatar(
+                                radius: 25.r,
+                                backgroundColor: AppColors.whiteColor,
+                                child: const Icon(Icons.arrow_back),
+                              ),
                             ),
                           ),
-                          Positioned(
-                            right: 15.w,
-                            top: 10.h,
-                            child: CircleAvatar(
-                              radius: 25.r,
-                              backgroundColor: AppColors.whiteColor,
-                              child: const Icon(Icons.share),
-                            ),
-                          ),
+                          // Positioned(
+                          //   right: 15.w,
+                          //   top: 10.h,
+                          //   child: GestureDetector(
+                          //     onTap:(){},
+                                
+                          //       // hostelFinderController.shareHostel();},
+                          //     child: CircleAvatar(
+                          //       radius: 25.r,
+                          //       backgroundColor: AppColors.whiteColor,
+                          //       child: const Icon(Icons.share),
+                          //     ),
+                          //   ),
+                          // ),
                           Obx(
                             () => Positioned(
                               bottom: 10.h,
@@ -94,8 +96,8 @@ class HostelDetails extends StatelessWidget {
                                   effect: WormEffect(
                                       dotHeight: 5.0.h,
                                       dotWidth: 12.w,
-                                      dotColor: AppColors.secondaryColor,
-                                      activeDotColor: AppColors.primaryColor),
+                                      dotColor: AppColors.primaryColor,
+                                      activeDotColor: AppColors.accentColor),
                                 ),
                               ),
                             ),
@@ -160,21 +162,39 @@ class HostelDetails extends StatelessWidget {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Text("Review (100)"),
+                      const Text("Caretaker's Contact"),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                        Icon(Icons.call, size: 30.h,),
+                        SizedBox(width: 5.w,),
+                        Padding(
+                          padding:EdgeInsets.only(bottom:9.0.h),
+                          child: Text("0704847676",style:Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 17.sp),),
+                        )
+                      ],),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      const Text("Reviews (100)"),
                       SizedBox(
                         height: 10.h,
                       ),
                       Row(
                         children: [
-                          DetailsFilter(text: "All"),
+                          const DetailsFilter(text: "All"),
                           SizedBox(
                             width: 10.h,
                           ),
-                          DetailsFilter(text: "Positive"),
+                          const DetailsFilter(text: "Positive"),
                           SizedBox(
                             height: 10.h,
                           ),
-                          DetailsFilter(text: "Negative"),
+                          const DetailsFilter(text: "Negative"),
                         ],
                       ),
                       SizedBox(
@@ -214,7 +234,7 @@ class HostelDetails extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: List.generate(3, (index) {
-                                        return Icon(Icons.star);
+                                        return const Icon(Icons.star);
                                       }),
                                     ),
                                     SizedBox(
@@ -252,6 +272,7 @@ class HostelDetails extends StatelessWidget {
                     topLeft: Radius.circular(20.r),
                     topRight: Radius.circular(20.r))),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,6 +287,18 @@ class HostelDetails extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodySmall,
                     )
                   ],
+                ),
+                GestureDetector(
+                  onTap: (){hostelFinderController.goToReview();},
+                  child:Container(
+                    alignment:Alignment.center,
+                    height: 50.h,
+                    width: 150.w,
+                    decoration: BoxDecoration(
+                    color:AppColors.accentColor,
+                    borderRadius:BorderRadius.circular(30.r)),
+                    child:  Text("Leave a review", style:  Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.whiteColor, fontSize: 16.sp),),
+                  )
                 )
               ],
             ),
