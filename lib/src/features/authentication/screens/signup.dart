@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class SignUp extends StatelessWidget {
   SignUp({super.key});
@@ -14,6 +15,8 @@ class SignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    signUpController.nextPage.value=Get.parameters['nextPage']??"";
+    signUpController.hostelId.value=Get.parameters['hostelId']??"";
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -49,19 +52,30 @@ class SignUp extends StatelessWidget {
               SizedBox(
                 height: 50.h,
               ),
-             const LoginTextField(hint:"Enter your name", icon: Icons.person,),
+              LoginTextField(
+              controller: signUpController.nameController,
+              hint:"Enter your name", icon: Icons.person,),
               SizedBox(
                 height: 20.h,
               ),
-              const LoginTextField(hint: "atc@exampl.com",icon: Icons.email,),
+               LoginTextField(
+              controller: signUpController.emailController,
+                
+                hint: "atc@exampl.com",icon: Icons.email,),
               SizedBox(
                 height: 10.h,
               ),
-              const LoginTextField(hint:"07XX-XXX-XXX", icon: Icons.phone,),
+               LoginTextField(
+              controller: signUpController.phoneController,
+                
+                hint:"07XX-XXX-XXX", icon: Icons.phone,),
               SizedBox(
                 height: 20.h,
               ),
-              const LoginTextField(hint: "Enter your password",icon: Icons.password,obscureText: true,),
+               LoginTextField(
+              controller: signUpController.passwordController,
+                
+                hint: "Enter your password",icon: Icons.password,obscureText: true,),
               SizedBox(
                 height: 10.h,
               ),
@@ -70,7 +84,7 @@ class SignUp extends StatelessWidget {
                 height: 50.h,
               ),
               GestureDetector(
-                  onTap: () {},
+                  onTap: () {signUpController.signUpAction();},
                   child: Container(
                     alignment: Alignment.center,
                     height: 50.h,
@@ -102,7 +116,14 @@ class SignUp extends StatelessWidget {
                             ?.copyWith(color: AppColors.accentColor))
                   ],
                 ),
-              )
+              ),
+              SizedBox(height:20.h),
+              Obx(() => SizedBox(
+                child:signUpController.isSigningIn.value?LoadingAnimationWidget.staggeredDotsWave(
+          color: AppColors.accentColor,
+          size: 50,
+        ):null,
+              ))
             ],
           ),
         ),
@@ -116,11 +137,13 @@ class LoginTextField extends StatelessWidget {
     required  this.hint, 
     required this.icon,
     this.obscureText = false,
+    required this.controller,
     super.key,
   });
   final String hint;
   final IconData icon;
   final bool obscureText;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +152,7 @@ class LoginTextField extends StatelessWidget {
           color: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(49.r)),
       child: TextField(
+        controller: controller,
           obscuringCharacter: '●',
         obscureText: obscureText,
         cursorColor: AppColors.secondaryColor,

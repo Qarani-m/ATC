@@ -1,7 +1,9 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:atc/src/constants/image_strings.dart';
 import 'package:atc/src/constants/text_strings.dart';
 import 'package:atc/src/features/hostel_finder/controller/hostel_finder_controller.dart';
+import 'package:atc/src/features/hostel_finder/models/hostel_model.dart';
 import 'package:atc/src/features/hostel_finder/widgets/main_filter.dart';
 import 'package:atc/src/features/hostel_finder/widgets/main_hostel.dart';
 import 'package:atc/src/features/hostel_finder/widgets/main_searchbar.dart';
@@ -9,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:atc/src/constants/colors.dart';
-
 
 
 class HostelFinderHome extends StatelessWidget {
@@ -49,6 +50,16 @@ class HostelFinderHome extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(4, (index) {
                     return OneHostel(
+                      model: HostelModel(
+                        mainImageUrl: AppImages.image1,
+                        priceForOne: "21, 000",
+                        name: "Nacary Elite house",
+                        location:"300 meters from gate F" ,
+                        reviewCount: "12",
+                        beds: "2",
+                        hostelId: "h2312",
+                        wifiStatus: "1"
+                      ),
                       hostelFinderController: hostelFinderController,
                     );
                   }),

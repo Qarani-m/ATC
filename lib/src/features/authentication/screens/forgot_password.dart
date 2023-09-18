@@ -1,7 +1,6 @@
 import 'package:atc/src/constants/colors.dart';
 import 'package:atc/src/constants/image_strings.dart';
 import 'package:atc/src/features/authentication/controller/login_controller.dart';
-import 'package:atc/src/features/authentication/controller/signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
