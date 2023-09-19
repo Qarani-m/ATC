@@ -1,7 +1,9 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:atc/src/constants/image_strings.dart';
 import 'package:atc/src/constants/text_strings.dart';
 import 'package:atc/src/features/hostel_finder/controller/hostel_finder_controller.dart';
+import 'package:atc/src/features/hostel_finder/models/hostel_model.dart';
 import 'package:atc/src/features/hostel_finder/widgets/main_filter.dart';
 import 'package:atc/src/features/hostel_finder/widgets/main_hostel.dart';
 import 'package:atc/src/features/hostel_finder/widgets/main_searchbar.dart';
@@ -10,8 +12,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:atc/src/constants/colors.dart';
 
-
-
 class HostelFinderHome extends StatelessWidget {
   HostelFinderHome({super.key});
   final hostelFinderController = Get.find<HostelFinderController>();
@@ -19,45 +19,71 @@ class HostelFinderHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(left: 12.w, right: 12.w, top: 60.h),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SearchField(hostelFinderController: hostelFinderController),
-              SizedBox(
-                height: 30.h,
-              ),
-              SizedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(4, (index) {
-                    return FiltersHome(
-                        hostelFinderController: hostelFinderController,
-                        label: AppStrings.hostelFinderHomePageFilters[index],
-                        activeIndex: index);
-                  }),
-                ),
-              ),
-              SizedBox(
-                height: 30.h,
-              ),
-              SizedBox(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(4, (index) {
-                    return OneHostel(
-                      hostelFinderController: hostelFinderController,
-                    );
-                  }),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+        backgroundColor: AppColors.primaryColor,
+        body: FutureBuilder(
+            future: hostelFinderController.fetchAllHostelDataFromFirestore(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return const Center(
+                  child: Text("You need some Internet for this to work"),
+                );
+              } else {
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(left: 12.w, right: 12.w, top: 60.h),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SearchField(
+                            hostelFinderController: hostelFinderController),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+                        SizedBox(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(4, (index) {
+                              return FiltersHome(
+                                  hostelFinderController:
+                                      hostelFinderController,
+                                  label: AppStrings
+                                      .hostelFinderHomePageFilters[index],
+                                  activeIndex: index);
+                            }),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+                        SizedBox(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(hostelFinderController.hostelList.length, (index) {
+                              return OneHostel(
+                                model: HostelModel(
+                                    mainImageUrl: AppImages.image1,
+                                    priceForOne: hostelFinderController.hostelList[index].priceForOne??"3 billion",
+                                    name:hostelFinderController.hostelList[index].name??"Unknown name",
+                                    location: hostelFinderController.hostelList[index].location??"Unknown location",
+                                    reviewCount: hostelFinderController.hostelList[index].reviewCount??"0",
+                                    beds: hostelFinderController.hostelList[index].beds??"1",
+                                    hostelId: hostelFinderController.hostelIds[index],
+                                    wifiStatus:hostelFinderController.hostelList[index].wifiStatus??"0"),
+                                hostelFinderController: hostelFinderController,
+                              );
+                            }),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+            }));
   }
 }
