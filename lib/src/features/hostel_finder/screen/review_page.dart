@@ -33,7 +33,7 @@ class ReviewPage extends StatelessWidget {
                     height: 300.h,
                     width: 390.w,
                     decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: AppColors.secondaryColor,
                         borderRadius: BorderRadius.circular(40.r),
                         image: const DecorationImage(
                             image: AssetImage(AppImages.image1),
