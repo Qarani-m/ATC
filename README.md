@@ -7,18 +7,6 @@ So here we go
 
 # ATC (All Things Chuka) - Android App
 
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
 ## Problem Statement
 
 As students at CU, we often find it challenging to access essential information and services related to campus life. This includes finding suitable hostels, staying updated on events, checking commodity prices, and keeping up with the latest school news. To address this, we're developing the ATC (All Things Chuka) app, a one-stop solution for students to enhance their university experience.
