@@ -12,6 +12,7 @@ class HostelModel {
   String? waterStatus;
   String? contactInfo;
   String? mainImageUrl;
+  String? description;
 
   // Constructor
   HostelModel({
@@ -27,7 +28,8 @@ class HostelModel {
     this.hotShowerStatus,
     this.waterStatus,
     this.contactInfo,
-    this.mainImageUrl
+    this.mainImageUrl,
+    this.description
 
   });
 
@@ -46,7 +48,8 @@ class HostelModel {
       'hotShowerStatus': hotShowerStatus,
       'waterStatus': waterStatus,
       'contactInfo': contactInfo,
-      'mainImageUrl':mainImageUrl
+      'mainImageUrl':mainImageUrl,
+      'description':description
     };
   }
 
@@ -66,6 +69,7 @@ class HostelModel {
       waterStatus: json['waterStatus'],
       contactInfo: json['contactInfo'],
       mainImageUrl: json['mainImageUrl'],
+      description: json['description'],
       
     );
   }

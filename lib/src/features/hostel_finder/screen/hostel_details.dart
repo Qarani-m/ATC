@@ -1,4 +1,6 @@
 import 'package:atc/src/constants/image_strings.dart';
+import 'package:atc/src/features/hostel_finder/models/hostel_model.dart';
+import 'package:atc/src/features/hostel_finder/models/review_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:atc/src/constants/text_strings.dart';
 import 'package:atc/src/features/hostel_finder/controller/hostel_finder_controller.dart';
 import 'package:atc/src/constants/colors.dart';
-
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -18,32 +19,36 @@ class HostelDetails extends StatelessWidget {
     final hostelFinderController = Get.find<HostelFinderController>();
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-      body:FutureBuilder(
-        future: hostelFinderController.fetchOneHostel(Get.parameters["hostelId"]!), 
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-          if(snapshot.connectionState ==ConnectionState.waiting){
-            return CircularProgressIndicator();
-
-          }else if(snapshot.hasError){
-            return Text("ssss");
-          }else{
-                return HostelDetailsMain(hostelFinderController: hostelFinderController);
-            
-
-          }
-
-        }),
+      body: FutureBuilder(
+          future: hostelFinderController
+              .fetchOneHostel(Get.parameters["hostelId"]!),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return const Text("ssss");
+            } else {
+              return HostelDetailsMain(
+                  model: hostelFinderController.hostelModel,
+                  hostelFinderController: hostelFinderController);
+            }
+          }),
     );
   }
 }
+
 //  HostelDetailsMain(hostelFinderController: hostelFinderController)
 class HostelDetailsMain extends StatelessWidget {
   const HostelDetailsMain({
     super.key,
     required this.hostelFinderController,
+    required this.model,
+    //  this.reviewModel=constReviewModel()
   });
 
   final HostelFinderController hostelFinderController;
+  final HostelModel model;
+  // final ReviewModel reviewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +79,7 @@ class HostelDetailsMain extends StatelessWidget {
                                   height: 350.h,
                                   width: 390.w,
                                   decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(40.r),
+                                      borderRadius: BorderRadius.circular(40.r),
                                       image: const DecorationImage(
                                           image: AssetImage(AppImages.image1),
                                           fit: BoxFit.cover)),
@@ -88,7 +92,9 @@ class HostelDetailsMain extends StatelessWidget {
                           left: 15.w,
                           top: 10.h,
                           child: GestureDetector(
-                            onTap: (){hostelFinderController.goBack();},
+                            onTap: () {
+                              hostelFinderController.goBack();
+                            },
                             child: CircleAvatar(
                               radius: 25.r,
                               backgroundColor: AppColors.whiteColor,
@@ -96,7 +102,6 @@ class HostelDetailsMain extends StatelessWidget {
                             ),
                           ),
                         ),
-
                         Obx(
                           () => Positioned(
                             bottom: 10.h,
@@ -123,7 +128,7 @@ class HostelDetailsMain extends StatelessWidget {
                       height: 20.h,
                     ),
                     Text(
-                      "Nacary Elite house",
+                      model.name!,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
@@ -133,7 +138,7 @@ class HostelDetailsMain extends StatelessWidget {
                       height: 2.h,
                     ),
                     Text(
-                      "300 meters from gate F, 10 reviews",
+                      "${model.location}, ${model.type} , ${model.reviewCount} reviews",
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     SizedBox(
@@ -145,23 +150,37 @@ class HostelDetailsMain extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: AppColors.whiteColor,
                           borderRadius: BorderRadius.circular(20.r)),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Amenities(
-                            text: "2 beds",
+                            text: "${model.beds!} beds",
                             icon: Icons.hotel,
                           ),
                           Amenities(
-                            text: "free",
-                            icon: Icons.wifi,
+                            text: model.wifiStatus == "1" ? "free" : "No wifi",
+                            icon: model.wifiStatus == "1"
+                                ? Icons.wifi
+                                : Icons.wifi_off,
                           ),
                           Amenities(
-                            text: "hot shower",
-                            icon: Icons.hot_tub,
+                            text: model.type == "bedsitter" &&
+                                    model.hotShowerStatus == "1"
+                                ? "hot shower"
+                                : model.type == "bedsitter" &&
+                                        model.hotShowerStatus == "0"
+                                    ? "Cold shower"
+                                    : null,
+                            icon: model.type == "bedsitter" &&
+                                    model.hotShowerStatus == "1"
+                                ? Icons.hot_tub
+                                : model.type == "bedsitter" &&
+                                        model.hotShowerStatus == "0"
+                                    ? Icons.snowing
+                                    : null,
                           ),
                           Amenities(
-                            text: "free",
+                            text: model.waterStatus,
                             icon: Icons.wash,
                           ),
                         ],
@@ -171,7 +190,7 @@ class HostelDetailsMain extends StatelessWidget {
                       height: 10.h,
                     ),
                     Text(
-                      AppStrings.nacaryGuestHouse,
+                      model.description!,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     SizedBox(
@@ -181,17 +200,28 @@ class HostelDetailsMain extends StatelessWidget {
                     SizedBox(
                       height: 10.h,
                     ),
-
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                      Icon(Icons.call, size: 30.h,),
-                      SizedBox(width: 5.w,),
-                      Padding(
-                        padding:EdgeInsets.only(bottom:9.0.h),
-                        child: Text("0704847676",style:Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 17.sp),),
-                      )
-                    ],),
+                        Icon(
+                          Icons.call,
+                          size: 30.h,
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 9.0.h),
+                          child: Text(
+                            model.contactInfo!,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(fontSize: 17.sp),
+                          ),
+                        )
+                      ],
+                    ),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -215,61 +245,31 @@ class HostelDetailsMain extends StatelessWidget {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Column(
-                      children: List.generate(10, (index) {
-                        return Container(
-                          padding: EdgeInsets.only(bottom: 20.h),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Klaus M.",
-                                      style: TextStyle(fontSize: 14.sp)),
-                                  Text(
-                                    "5 days ago",
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              Text(AppStrings.review,
-                                  style:
-                                      Theme.of(context).textTheme.bodySmall),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    children: List.generate(3, (index) {
-                                      return const Icon(Icons.star);
-                                    }),
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  Text("3.5",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall)
-                                ],
-                              ),
-                              SizedBox(height: 5.h,),
-                              Container(color: AppColors.primaryColor, width:390.w, height: 1.h)
-                              ,SizedBox(height: 2.h,),
-                              
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
+                    FutureBuilder(
+                        future: hostelFinderController
+                            .getAllReviews(Get.parameters['hostelId']!),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return const Center(
+                                child: Text("No reviews Found for this hoste"));
+                          } else {
+                            return Column(
+                              children: List.generate(
+                                  hostelFinderController.reviewsList.length,
+                                  (index) {
+                                print(index);
+                                // return Text("ff--->${index}");
+                                return OneReview(
+                                    model:
+                                        hostelFinderController.reviewsList[0]);
+                              }),
+                            );
+                          }
+                        }),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -293,32 +293,94 @@ class HostelDetailsMain extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Ksh 21,000",
+                    "Ksh ${model.priceForOne}",
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w700, fontSize: 19.sp),
                   ),
                   Text(
-                    "Ksh 25,000 for 2 beds",
+                    "Ksh ${model.priceForTwo} for 2 beds",
                     style: Theme.of(context).textTheme.bodySmall,
                   )
                 ],
               ),
               GestureDetector(
-                onTap: (){hostelFinderController.goToReview(Get.parameters['hostelId']!);},
-                child:Container(
-                  alignment:Alignment.center,
-                  height: 50.h,
-                  width: 150.w,
-                  decoration: BoxDecoration(
-                  color:AppColors.accentColor,
-                  borderRadius:BorderRadius.circular(30.r)),
-                  child:  Text("Leave a review", style:  Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.whiteColor, fontSize: 16.sp),),
-                )
-              )
+                  onTap: () {
+                    hostelFinderController
+                        .goToReview(Get.parameters['hostelId']!);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50.h,
+                    width: 150.w,
+                    decoration: BoxDecoration(
+                        color: AppColors.accentColor,
+                        borderRadius: BorderRadius.circular(30.r)),
+                    child: Text(
+                      "Leave a review",
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: AppColors.whiteColor, fontSize: 16.sp),
+                    ),
+                  ))
             ],
           ),
         )
       ],
+    );
+  }
+}
+
+class OneReview extends StatelessWidget {
+  const OneReview({super.key, required this.model});
+  final ReviewModel model;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 20.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(model.userId ?? "vc", style: TextStyle(fontSize: 14.sp)),
+              Text(
+                model.date ?? "tommorow",
+                style: Theme.of(context).textTheme.bodySmall,
+              )
+            ],
+          ),
+          SizedBox(
+            height: 5.h,
+          ),
+          Text(model.writtenReview ?? "Some written review",
+              style: Theme.of(context).textTheme.bodySmall),
+          SizedBox(
+            height: 5.h,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                children: List.generate(2, (index) {
+                  return const Icon(Icons.star);
+                }),
+              ),
+              SizedBox(
+                width: 5.w,
+              ),
+              Text(model.starRating ?? "0.0",
+                  style: Theme.of(context).textTheme.bodySmall)
+            ],
+          ),
+          SizedBox(
+            height: 5.h,
+          ),
+          Container(color: AppColors.primaryColor, width: 390.w, height: 1.h),
+          SizedBox(
+            height: 2.h,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -347,8 +409,8 @@ class DetailsFilter extends StatelessWidget {
 
 class Amenities extends StatelessWidget {
   const Amenities({super.key, required this.text, required this.icon});
-  final IconData icon;
-  final String text;
+  final IconData? icon;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -362,7 +424,7 @@ class Amenities extends StatelessWidget {
           SizedBox(
             width: 5.w,
           ),
-          Text(text, style: Theme.of(context).textTheme.bodySmall)
+          Text(text!, style: Theme.of(context).textTheme.bodySmall)
         ],
       ),
     );
