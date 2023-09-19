@@ -112,23 +112,6 @@ class HostelFinderController extends GetxController {
   Future<List<ReviewModel>> getAllReviews(String hostelId) async {
     reviewsList=[];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     try {
       print(hostelId);
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -142,8 +125,10 @@ class HostelFinderController extends GetxController {
 
           reviewsList.add(review);
         }
-        print(reviewsList);
+        print("---->here are some reviews");
       } else {
+        print("---->no reviews here");
+
         return reviewsList;
       }
     } catch (e) {

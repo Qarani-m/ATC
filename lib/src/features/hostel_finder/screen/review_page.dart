@@ -13,7 +13,8 @@ class ReviewPage extends StatelessWidget {
   ReviewPage({super.key});
 
   final hostelFinderController = Get.find<HostelFinderController>();
-  final submitReviewController = Get.find<SubmitReviewController>();
+  SubmitReviewController submitReviewController =    Get.put(SubmitReviewController());
+
   final authHelper = Get.find<AuthHelper>();
   @override
   Widget build(BuildContext context) {

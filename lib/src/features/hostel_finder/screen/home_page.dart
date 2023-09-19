@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:atc/src/constants/colors.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class HostelFinderHome extends StatelessWidget {
   HostelFinderHome({super.key});
@@ -24,8 +25,11 @@ class HostelFinderHome extends StatelessWidget {
             future: hostelFinderController.fetchAllHostelDataFromFirestore(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Center(
+                  child: LoadingAnimationWidget.staggeredDotsWave(
+                    color: AppColors.accentColor,
+                    size: 50,
+                  ),
                 );
               } else if (snapshot.hasError) {
                 return const Center(
@@ -63,17 +67,30 @@ class HostelFinderHome extends StatelessWidget {
                         SizedBox(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(hostelFinderController.hostelList.length, (index) {
+                            children: List.generate(
+                                hostelFinderController.hostelList.length,
+                                (index) {
                               return OneHostel(
                                 model: HostelModel(
                                     mainImageUrl: AppImages.image1,
-                                    priceForOne: hostelFinderController.hostelList[index].priceForOne??"3 billion",
-                                    name:hostelFinderController.hostelList[index].name??"Unknown name",
-                                    location: hostelFinderController.hostelList[index].location??"Unknown location",
-                                    reviewCount: hostelFinderController.hostelList[index].reviewCount??"0",
-                                    beds: hostelFinderController.hostelList[index].beds??"1",
-                                    hostelId: hostelFinderController.hostelIds[index],
-                                    wifiStatus:hostelFinderController.hostelList[index].wifiStatus??"0"),
+                                    priceForOne: hostelFinderController
+                                            .hostelList[index].priceForOne ??
+                                        "3 billion",
+                                    name: hostelFinderController.hostelList[index].name ??
+                                        "Unknown name",
+                                    location: hostelFinderController
+                                            .hostelList[index].location ??
+                                        "Unknown location",
+                                    reviewCount: hostelFinderController
+                                            .hostelList[index].reviewCount ??
+                                        "0",
+                                    beds: hostelFinderController.hostelList[index].beds ??
+                                        "1",
+                                    hostelId:
+                                        hostelFinderController.hostelIds[index],
+                                    wifiStatus: hostelFinderController
+                                            .hostelList[index].wifiStatus ??
+                                        "0"),
                                 hostelFinderController: hostelFinderController,
                               );
                             }),

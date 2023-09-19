@@ -18,9 +18,11 @@ class SubmitReviewController extends GetxController{
     isSubmiting.value =true;
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final List<String>? items = prefs.getStringList('userDetails');
-    await SubmitReview.submitReview(starRating.value, writtenReview.value, items![6],hostelId.value);
+  print("======> ${items![0]}");
+    await SubmitReview.submitReview(starRating.value, writtenReview.value, items![0],hostelId.value);
     isSubmiting.value =false;
     HostelFinderAuxFunctions.showSnackBar("Review submitted succesfully","Your review for $hostelName has been submitted succesfully !");
+    writtenReviewController.text="";
   }
    void goToSignIn(String hostelId,){
     Get.toNamed(

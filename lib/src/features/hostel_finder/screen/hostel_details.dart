@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:atc/src/constants/text_strings.dart';
 import 'package:atc/src/features/hostel_finder/controller/hostel_finder_controller.dart';
 import 'package:atc/src/constants/colors.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -24,7 +25,11 @@ class HostelDetails extends StatelessWidget {
               .fetchOneHostel(Get.parameters["hostelId"]!),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return Center(
+                  child: LoadingAnimationWidget.staggeredDotsWave(
+                color: AppColors.accentColor,
+                size: 50,
+              ));
             } else if (snapshot.hasError) {
               return const Text("ssss");
             } else {
@@ -252,7 +257,12 @@ class HostelDetailsMain extends StatelessWidget {
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
+                            return Center(
+                              child: LoadingAnimationWidget.staggeredDotsWave(
+                                color: AppColors.accentColor,
+                                size: 50,
+                              ),
+                            );
                           } else if (snapshot.hasError) {
                             return const Center(
                                 child: Text("No reviews Found for this hoste"));
@@ -265,7 +275,7 @@ class HostelDetailsMain extends StatelessWidget {
                                 // return Text("ff--->${index}");
                                 return OneReview(
                                     model:
-                                        hostelFinderController.reviewsList[0]);
+                                        hostelFinderController.reviewsList[index]);
                               }),
                             );
                           }
@@ -352,7 +362,7 @@ class OneReview extends StatelessWidget {
           SizedBox(
             height: 5.h,
           ),
-          Text(model.writtenReview ?? "Some written review",
+          Text(model.writtenReview!.isEmpty && double.parse(model.starRating!)>= 3.0 ?"Impressed": model.writtenReview!.isEmpty && double.parse(model.starRating!)< 3.0 ?"Not impressed":model.writtenReview ?? "Some written review",
               style: Theme.of(context).textTheme.bodySmall),
           SizedBox(
             height: 5.h,
@@ -361,7 +371,7 @@ class OneReview extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
-                children: List.generate(2, (index) {
+                children: List.generate(1, (index) {
                   return const Icon(Icons.star);
                 }),
               ),
