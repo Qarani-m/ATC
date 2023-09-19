@@ -2,6 +2,7 @@ import 'package:atc/src/constants/image_strings.dart';
 import 'package:atc/src/features/hostel_finder/models/hostel_model.dart';
 import 'package:atc/src/features/hostel_finder/models/review_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -250,36 +251,47 @@ class HostelDetailsMain extends StatelessWidget {
                     SizedBox(
                       height: 10.h,
                     ),
-                    FutureBuilder(
-                        future: hostelFinderController
-                            .getAllReviews(Get.parameters['hostelId']!),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(
-                              child: LoadingAnimationWidget.staggeredDotsWave(
-                                color: AppColors.accentColor,
-                                size: 50,
+                    StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('reviews')
+                          .where('hostelId',
+                              isEqualTo: Get.parameters['hostelId'])
+                          .orderBy('reviewId',
+                              descending:
+                                  true) // Order by 'date' field in descending order
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          print(snapshot.error);
+                          return const Text('Something went wrong');
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Text("Loading");
+                        }
+                        List<QueryDocumentSnapshot> documents =
+                            snapshot.data!.docs;
+                        return Column(
+                          children: List.generate(documents.length, (index) {
+                            // Access data fields within each document
+                            String starRating = documents[index]['starRating'];
+                            String userId = documents[index]['userId'];
+                            String writtenReview =
+                                documents[index]['writtenReview'];
+                            String date = documents[index]['date'];
+                            return OneReview(
+                              model: ReviewModel(
+                                date: date,
+                                starRating: starRating,
+                                userId: userId,
+                                writtenReview: writtenReview,
                               ),
                             );
-                          } else if (snapshot.hasError) {
-                            return const Center(
-                                child: Text("No reviews Found for this hoste"));
-                          } else {
-                            return Column(
-                              children: List.generate(
-                                  hostelFinderController.reviewsList.length,
-                                  (index) {
-                                print(index);
-                                // return Text("ff--->${index}");
-                                return OneReview(
-                                    model:
-                                        hostelFinderController.reviewsList[index]);
-                              }),
-                            );
-                          }
-                        }),
+                          }),
+                        );
+                      },
+                    ),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -362,7 +374,14 @@ class OneReview extends StatelessWidget {
           SizedBox(
             height: 5.h,
           ),
-          Text(model.writtenReview!.isEmpty && double.parse(model.starRating!)>= 3.0 ?"Impressed": model.writtenReview!.isEmpty && double.parse(model.starRating!)< 3.0 ?"Not impressed":model.writtenReview ?? "Some written review",
+          Text(
+              model.writtenReview!.isEmpty &&
+                      double.parse(model.starRating!) >= 3.0
+                  ? "Impressed"
+                  : model.writtenReview!.isEmpty &&
+                          double.parse(model.starRating!) < 3.0
+                      ? "Not impressed"
+                      : model.writtenReview ?? "Some written review",
               style: Theme.of(context).textTheme.bodySmall),
           SizedBox(
             height: 5.h,
@@ -424,19 +443,17 @@ class Amenities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            size: 25.h,
-          ),
-          SizedBox(
-            width: 5.w,
-          ),
-          Text(text!, style: Theme.of(context).textTheme.bodySmall)
-        ],
-      ),
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 25.h,
+        ),
+        SizedBox(
+          width: 5.w,
+        ),
+        Text(text!, style: Theme.of(context).textTheme.bodySmall)
+      ],
     );
   }
 }
