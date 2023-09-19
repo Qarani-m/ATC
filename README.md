@@ -1,10 +1,3 @@
-
-# atc
-
-So here we go
----
-
-
 # ATC (All Things Chuka) - Android App
 
 ## Problem Statement
