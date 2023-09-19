@@ -7,9 +7,6 @@ So here we go
 
 # ATC (All Things Chuka) - Android App
 
-![App Logo](screenshots/image1.png)
-![App Logo](screenshots/image2.png)
-
 
 This project is a starting point for a Flutter application.
 
@@ -29,6 +26,10 @@ As students at CU, we often find it challenging to access essential information 
 ## Features
 
 ### Hostel Finder
+![App Logo](screenshots/image1.png)
+![App Logo](screenshots/image2.png)
+
+
 - **Description**: Finding suitable accommodation around campus can be a hassle. The Hostel Finder feature allows users to discover and explore different hostels, making it easier to find a place to stay during the academic year.
 - **Functionality**:
   - View a list of different hostels around the school.
