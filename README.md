@@ -7,7 +7,8 @@ So here we go
 
 # ATC (All Things Chuka) - Android App
 
-![App Logo](logo.png)
+![App Logo](screenshots/image1.png)
+![App Logo](screenshots/image2.png)
 
 
 This project is a starting point for a Flutter application.
