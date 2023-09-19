@@ -10,7 +10,8 @@ class SubmitReview {
       'starRating': starRating.toString(),
       'writtenReview': writtenReview,
       "userId": userId,
-      "hostelId": hostelId
+      "hostelId": hostelId,
+      "date":'${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year.toString().substring(2)}'
     };
     reviewCollection.add(review).then((value) {
 

@@ -9,11 +9,12 @@ import '../../features/hostel_finder/controller/hostel_finder_controller.dart';
 class AppBindings extends Bindings{
   @override
   void dependencies() {
+    Get.lazyPut<SubmitReviewController>(() =>SubmitReviewController());
     Get.lazyPut<HostelFinderController>(() =>HostelFinderController());
     Get.lazyPut<LoginController>(() =>LoginController());
     Get.lazyPut<SignUpController>(() =>SignUpController());
     Get.lazyPut<AuthHelper>(() =>AuthHelper());
-    Get.lazyPut<SubmitReviewController>(() =>SubmitReviewController());
+    // Get.lazyPut<SubmitReviewController>(() =>SubmitReviewController());
   }
 
 }
