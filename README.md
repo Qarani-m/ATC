@@ -73,12 +73,7 @@ We welcome contributions from fellow students and developers who are passionate 
 5. **Reviews**:
    - Your pull requests will be reviewed by maintainers or other contributors. Be prepared to make changes based on their feedback.
 
-6. **Communication**:
-   - Join our whatsApp group 😅 for discussions and collaboration.
-   - [whatsApp Group Link](https://chat.whatsapp.com/Ima04gRMN7KKH3uZBhtq3B)
-   - Feel free to reach out to project maintainers or the community for guidance or questions.
-
-7. **License**:
+6. **License**:
    - By contributing to this project, you agree that your contributions will be licensed under the project's chosen open-source license.
    - We've not choosen any yet 😅so......we'll do so once we understand what any of mean 
 
