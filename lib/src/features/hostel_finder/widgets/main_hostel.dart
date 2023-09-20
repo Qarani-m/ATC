@@ -1,20 +1,22 @@
 import 'package:atc/src/constants/image_strings.dart';
+import 'package:atc/src/features/hostel_finder/models/hostel_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:atc/src/features/hostel_finder/controller/hostel_finder_controller.dart';
 import 'package:atc/src/constants/colors.dart';
 
-
 class OneHostel extends StatelessWidget {
-  OneHostel({super.key, required this.hostelFinderController});
+  OneHostel(
+      {super.key, required this.hostelFinderController, required this.model});
   final HostelFinderController hostelFinderController;
+  final HostelModel model;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        hostelFinderController.goToHostelDetails("hostelId");
+        hostelFinderController.goToHostelDetails(model.hostelId!);
       },
       child: Column(
         children: [
@@ -43,14 +45,14 @@ class OneHostel extends StatelessWidget {
                     height: 10.h,
                   ),
                   Text(
-                    "Nacary Elite house",
+                    model.name!,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   SizedBox(
                     height: 2.h,
                   ),
                   Text(
-                    "300 meters from gate F, 4 rooms available",
+                    "${model.location!}, ${model.reviewCount!} reviews",
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   SizedBox(
@@ -60,13 +62,15 @@ class OneHostel extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Ksh 21,000 / sem",
+                        "Ksh ${model.priceForOne!}/sem",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Icon(Icons.wifi_off),
+                          model.wifiStatus == "1"
+                              ? const Icon(Icons.wifi)
+                              : const Icon(Icons.wifi_off),
                           SizedBox(width: 15.w),
                           const Icon(
                             Icons.hotel,
@@ -75,7 +79,7 @@ class OneHostel extends StatelessWidget {
                             width: 5.w,
                           ),
                           Text(
-                            "2",
+                            model.beds!,
                             style: GoogleFonts.poppins(
                               color: AppColors.secondaryColor,
                             ),

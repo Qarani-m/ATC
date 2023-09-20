@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "539647764140",
+    "project_id": "atcv1-e0500",
+    "storage_bucket": "atcv1-e0500.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539647764140:android:7f0487bbb9807940c96109",
+        "android_client_info": {
+          "package_name": "com.example.atc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4i-PgVFj8XXL0UoLA8TZQkmVBiScD4dk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
