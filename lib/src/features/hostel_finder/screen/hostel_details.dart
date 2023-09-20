@@ -236,17 +236,27 @@ class HostelDetailsMain extends StatelessWidget {
                       height: 10.h,
                     ),
                     Row(
-                      children: [
-                        const DetailsFilter(text: "All"),
-                        SizedBox(
-                          width: 10.h,
-                        ),
-                        const DetailsFilter(text: "Positive"),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        const DetailsFilter(text: "Negative"),
-                      ],
+                      children: List.generate(3, (index) {
+                        return Row(
+                          children: [
+                            GestureDetector(
+                                onTap: () {
+                                  hostelFinderController
+                                      .changeActiveDetailsFilter(index);
+                                },
+                                child: DetailsFilter(
+                                    index: index,
+                                    hostelFinderController:
+                                        hostelFinderController,
+                                    text: AppStrings
+                                            .hostelFinderHomeDetailsFilters[
+                                        index])),
+                            SizedBox(
+                              width: 10.h,
+                            ),
+                          ],
+                        );
+                      }),
                     ),
                     SizedBox(
                       height: 10.h,
@@ -272,23 +282,51 @@ class HostelDetailsMain extends StatelessWidget {
                         }
                         List<QueryDocumentSnapshot> documents =
                             snapshot.data!.docs;
-                        return Column(
-                          children: List.generate(documents.length, (index) {
-                            // Access data fields within each document
-                            String starRating = documents[index]['starRating'];
-                            String userId = documents[index]['userId'];
-                            String writtenReview =
-                                documents[index]['writtenReview'];
-                            String date = documents[index]['date'];
-                            return OneReview(
-                              model: ReviewModel(
-                                date: date,
-                                starRating: starRating,
-                                userId: userId,
-                                writtenReview: writtenReview,
-                              ),
-                            );
-                          }),
+                        return Obx(()=>Column(
+                            children: List.generate(documents.length, (index) {
+                              String starRating = documents[index]['starRating'];
+                              double starRatingValue =double.tryParse(starRating) ?? 0.0;
+                              if (hostelFinderController.activeDetailsFilter.value ==1) {
+                                if (starRatingValue > 2.5) {
+                                  return OneReview(
+                                    model: ReviewModel(
+                                      date: documents[index]['date'],
+                                      starRating: documents[index]['starRating'],
+                                      userId: documents[index]['userId'],
+                                      writtenReview: documents[index]
+                                          ['writtenReview'],
+                                    ),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              } else if (hostelFinderController.activeDetailsFilter.value ==2) {
+                                if (starRatingValue < 2.5) {
+                                  return OneReview(
+                                    model: ReviewModel(
+                                      date: documents[index]['date'],
+                                      starRating: documents[index]['starRating'],
+                                      userId: documents[index]['userId'],
+                                      writtenReview: documents[index]
+                                          ['writtenReview'],
+                                    ),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              } else {
+                                return OneReview(
+                                  model: ReviewModel(
+                                    date: documents[index]['date'],
+                                    starRating: documents[index]['starRating'],
+                                    userId: documents[index]['userId'],
+                                    writtenReview: documents[index]
+                                        ['writtenReview'],
+                                  ),
+                                );
+                              }
+                            }),
+                          ),
                         );
                       },
                     ),
@@ -415,22 +453,39 @@ class OneReview extends StatelessWidget {
 }
 
 class DetailsFilter extends StatelessWidget {
-  const DetailsFilter({super.key, required this.text});
+  const DetailsFilter(
+      {required this.hostelFinderController,
+      required this.index,
+      super.key,
+      required this.text});
   final String text;
+
+  final int index;
+  final HostelFinderController hostelFinderController;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
-      decoration: BoxDecoration(
-          color: AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(10.r)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(text, style: Theme.of(context).textTheme.bodySmall),
-        ],
+    return Obx(
+      () => Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
+        decoration: BoxDecoration(
+            color: index == hostelFinderController.activeDetailsFilter.value
+                ? AppColors.accentColor
+                : AppColors.primaryColor,
+            borderRadius: BorderRadius.circular(10.r)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(text,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: index ==
+                              hostelFinderController.activeDetailsFilter.value
+                          ? AppColors.whiteColor
+                          : AppColors.secondaryColor,
+                    )),
+          ],
+        ),
       ),
     );
   }
