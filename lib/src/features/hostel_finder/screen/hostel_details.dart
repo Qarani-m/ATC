@@ -231,7 +231,7 @@ class HostelDetailsMain extends StatelessWidget {
                     SizedBox(
                       height: 20.h,
                     ),
-                    const Text("Reviews (100)"),
+                    const Text("Reviews"),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -282,6 +282,7 @@ class HostelDetailsMain extends StatelessWidget {
                         }
                         List<QueryDocumentSnapshot> documents =
                             snapshot.data!.docs;
+                            hostelFinderController.reviewCount.value=documents.length;
                         return Obx(()=>Column(
                             children: List.generate(documents.length, (index) {
                               String starRating = documents[index]['starRating'];

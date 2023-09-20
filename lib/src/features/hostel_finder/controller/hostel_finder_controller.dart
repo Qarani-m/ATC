@@ -158,6 +158,8 @@ class HostelFinderController extends GetxController {
   }
 
   RxInt activeDetailsFilter = 0.obs;
+  RxInt reviewCount = 0.obs;
+  
 
   void changeActiveDetailsFilter(int i) {
     activeDetailsFilter.value = i;
