@@ -110,7 +110,7 @@ class HostelFinderController extends GetxController {
 
   ReviewModel reviewModel = ReviewModel();
   Future<List<ReviewModel>> getAllReviews(String hostelId) async {
-    reviewsList=[];
+    reviewsList = [];
 
     try {
       print(hostelId);
@@ -155,6 +155,13 @@ class HostelFinderController extends GetxController {
       print('Error fetching collection data: $e');
     }
     return hostelList;
+  }
+
+  RxInt activeDetailsFilter = 0.obs;
+
+  void changeActiveDetailsFilter(int i) {
+    activeDetailsFilter.value = i;
+          print(activeDetailsFilter.value);
   }
 
   void goBack() {
