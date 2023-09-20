@@ -19,8 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-        statusBarColor: AppColors.primaryColor,
-        statusBarIconBrightness: Brightness.dark),
+        statusBarColor: AppColors.whiteColor,
+        statusBarIconBrightness: Brightness.light),
   );
   GoogleFonts.config.allowRuntimeFetching = false;
   WidgetsFlutterBinding.ensureInitialized();

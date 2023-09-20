@@ -20,7 +20,7 @@ class HostelFinderHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.whiteColor,
         body: FutureBuilder(
             future: hostelFinderController.fetchAllHostelDataFromFirestore(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
