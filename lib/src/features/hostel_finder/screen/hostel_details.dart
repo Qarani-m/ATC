@@ -43,18 +43,15 @@ class HostelDetails extends StatelessWidget {
   }
 }
 
-//  HostelDetailsMain(hostelFinderController: hostelFinderController)
 class HostelDetailsMain extends StatelessWidget {
   const HostelDetailsMain({
     super.key,
     required this.hostelFinderController,
     required this.model,
-    //  this.reviewModel=constReviewModel()
   });
 
   final HostelFinderController hostelFinderController;
   final HostelModel model;
-  // final ReviewModel reviewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +122,7 @@ class HostelDetailsMain extends StatelessWidget {
                                 effect: WormEffect(
                                     dotHeight: 5.0.h,
                                     dotWidth: 12.w,
-                                    dotColor: AppColors.primaryColor,
+                                    dotColor: AppColors.whiteColor,
                                     activeDotColor: AppColors.accentColor),
                               ),
                             ),
@@ -360,7 +357,21 @@ class HostelDetailsMain extends StatelessWidget {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.r),
                   topRight: Radius.circular(20.r)),
-             ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.secondaryColor.withOpacity(0.02),
+                  offset: const Offset(4, 0),
+                  blurRadius: 4.0,
+                ),
+                const BoxShadow(
+                  color: Colors.transparent,
+                  offset: Offset(0, -5),
+                ),
+                const BoxShadow(
+                  color: Colors.transparent,
+                  offset: Offset(0, 5),
+                ),
+              ]),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

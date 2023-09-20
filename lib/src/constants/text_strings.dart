@@ -1,9 +1,8 @@
 class AppStrings {
   static const List hostelFinderHomePageFilters = [
-    "Popular",
     "Price",
-    "Location",
     "Type"
+    ,"Location"
   ];
   static const List hostelFinderHomeDetailsFilters = [
     "All",

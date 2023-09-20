@@ -6,6 +6,7 @@ import 'package:atc/src/features/authentication/screens/signup.dart';
 import 'package:atc/src/features/hostel_finder/screen/home_page.dart';
 import 'package:atc/src/features/hostel_finder/screen/hostel_details.dart';
 import 'package:atc/src/features/hostel_finder/screen/review_page.dart';
+import 'package:atc/src/features/hostel_finder/screen/search_page.dart';
 import 'package:atc/src/utils/bindings/app_bindings.dart';
 import 'package:atc/src/utils/themes/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +21,8 @@ Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
         statusBarColor: AppColors.whiteColor,
-        statusBarIconBrightness: Brightness.light),
+        statusBarIconBrightness: Brightness.light
+        ),
   );
   GoogleFonts.config.allowRuntimeFetching = false;
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +31,7 @@ Future<void> main() async {
   );
   // .then((value) => Get.put(AuthHelper()));
   await SharedPreferences.getInstance();
+  print(ThemeMode);
   runApp(const MyApp());
 }
 
@@ -46,6 +49,8 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: AppThemes.lightTheme(),
+        darkTheme: AppThemes.darkTheme(),
+        themeMode: ThemeMode.dark,
         initialBinding: AppBindings(),
         initialRoute: "/",
         getPages: [
@@ -55,6 +60,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: "/login", page: () => Login()),
           GetPage(name: "/signUp", page: () => SignUp()),
           GetPage(name: "/forgotPassword", page: () => ForgotPassword()),
+          GetPage(name: "/searchPage", page: () => SearchPage()),
         ],
       ),
     );

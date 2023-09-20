@@ -24,4 +24,26 @@ class AppThemes {
                 fontSize: 18.sp)),
         iconTheme: const IconThemeData(color: AppColors.secondaryColor));
   }
+
+
+   static ThemeData darkTheme() {
+    return ThemeData(
+        fontFamily: "Poppins",
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF11a6a1)),
+        useMaterial3: true,
+        textTheme: TextTheme(
+            bodySmall: GoogleFonts.poppins(
+                color: AppColors.secondaryColor,
+                fontWeight: FontWeight.w400,
+                fontSize: 13.sp),
+            bodyMedium: GoogleFonts.poppins(
+                color: AppColors.secondaryColor,
+                fontWeight: FontWeight.w500,
+                fontSize: 16.sp),
+            bodyLarge: GoogleFonts.poppins(
+                color: AppColors.secondaryColor,
+                fontWeight: FontWeight.w500,
+                fontSize: 18.sp)),
+        iconTheme: const IconThemeData(color: AppColors.secondaryColor));
+  }
 }

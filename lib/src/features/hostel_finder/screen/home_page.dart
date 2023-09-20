@@ -51,7 +51,7 @@ class HostelFinderHome extends StatelessWidget {
                         SizedBox(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(4, (index) {
+                            children: List.generate(3, (index) {
                               return FiltersHome(
                                   hostelFinderController:
                                       hostelFinderController,
@@ -72,25 +72,15 @@ class HostelFinderHome extends StatelessWidget {
                                 (index) {
                               return OneHostel(
                                 model: HostelModel(
-                                    mainImageUrl: AppImages.image1,
-                                    priceForOne: hostelFinderController
-                                            .hostelList[index].priceForOne ??
-                                        "3 billion",
-                                    name: hostelFinderController.hostelList[index].name ??
-                                        "Unknown name",
-                                    location: hostelFinderController
-                                            .hostelList[index].location ??
-                                        "Unknown location",
-                                    reviewCount: hostelFinderController
-                                            .hostelList[index].reviewCount ??
-                                        "0",
-                                    beds: hostelFinderController.hostelList[index].beds ??
-                                        "1",
-                                    hostelId:
-                                        hostelFinderController.hostelIds[index],
-                                    wifiStatus: hostelFinderController
-                                            .hostelList[index].wifiStatus ??
-                                        "0"),
+                                    mainImageUrl: hostelFinderController.hostelList[index].mainImageUrl,
+                                    priceForOne: hostelFinderController.hostelList[index].priceForOne ??"3 billion",
+                                    name: hostelFinderController.hostelList[index].name ??"Unknown name",
+                                    location: hostelFinderController.hostelList[index].location ??"Unknown location",
+                                    reviewCount: hostelFinderController.hostelList[index].reviewCount ??"0",
+                                    beds: hostelFinderController.hostelList[index].beds ??"1",
+                                    hostelId:hostelFinderController.hostelIds[index],
+                                    wifiStatus: hostelFinderController.hostelList[index].wifiStatus ??"0"
+                                  ),
                                 hostelFinderController: hostelFinderController,
                               );
                             }),

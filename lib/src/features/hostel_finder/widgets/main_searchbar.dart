@@ -1,4 +1,5 @@
 import 'package:atc/src/constants/image_strings.dart';
+import 'package:atc/src/features/hostel_finder/controller/search_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,16 +19,11 @@ class SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        return Container(
+    final searchController  = Get.find<SearchBarController>();
+
+    return Container(
             padding: EdgeInsets.only(
-                left: !hostelFinderController.searchBarFocusNode.hasFocus &&
-                        !hostelFinderController.searchController.text
-                            .trim()
-                            .isNotEmpty
-                    ? 5.w
-                    : 20.w),
+                left:10.w),
             alignment: Alignment.centerLeft,
             height: 50.h,
             width: 327.w,
@@ -35,37 +31,42 @@ class SearchField extends StatelessWidget {
                 color: AppColors.whiteColor,
                 borderRadius: BorderRadius.circular(20.r),
                 boxShadow: hostelFinderController.boxShadow),
-            child: TextField(
-              controller: hostelFinderController.searchController,
-              focusNode: hostelFinderController.searchBarFocusNode,
-              cursorColor: AppColors.secondaryColor,
-              decoration: InputDecoration(
-                suffixIcon: Icon(
-                  Icons.cancel,
-                  size: 25.h,
-                  color: AppColors.secondaryColor,
+            child: Stack(
+              children: [
+                
+                TextField(
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    suffixIcon: Icon(
+                      Icons.cancel,
+                      size: 25.h,
+                      color: AppColors.secondaryColor,
+                    ),
+                    prefixIcon: Padding(
+                      padding:  EdgeInsets.all(10.h),
+                      child: SvgPicture.asset(
+                                AppImages.searchIcon,
+                                color: AppColors.secondaryColor,
+                              ),
+                    ),
+                          
+                    hintText: "Search",
+                    hintStyle: GoogleFonts.poppins(color: AppColors.secondaryColor),
+                    border: InputBorder.none,
+                  ),
                 ),
-                prefixIcon: hostelFinderController.showSearchIcon.value &&
-                        !hostelFinderController.searchBarFocusNode.hasFocus &&
-                        !hostelFinderController.searchController.text
-                            .trim()
-                            .isNotEmpty
-                    ? Padding(
-                        padding: EdgeInsets.all(
-                            10.h), // Adjust the padding to control the size
-                        child: Container(
-                            child: SvgPicture.asset(
-                          AppImages.searchIcon,
-                          color: AppColors.secondaryColor,
-                        )),
-                      )
-                    : null,
-                hintText: "Search",
-                hintStyle: GoogleFonts.poppins(color: AppColors.secondaryColor),
-                border: InputBorder.none,
-              ),
+                Positioned(
+                    child: GestureDetector(
+                      onTap: (){searchController.goToSearchPage();},
+                      child: Container(
+                        color: Colors.transparent,
+                        height: 50.h,
+                        width: 327.w,
+                      ),
+                    ),
+                ),
+              ],
             ));
-      },
-    );
+      ;
   }
 }
