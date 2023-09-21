@@ -41,7 +41,7 @@ class FiltersHome extends StatelessWidget {
                 Text(
                   label,
                   style: GoogleFonts.poppins(
-                    color: AppColors.secondaryColor,
+                    // color: AppColors.secondaryColor,
                   ),
                 ),
                 SizedBox(width: 5.w),

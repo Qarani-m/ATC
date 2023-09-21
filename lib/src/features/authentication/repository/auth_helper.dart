@@ -1,8 +1,13 @@
 // ignore_for_file: avoid_print
 
+import 'package:atc/src/features/authentication/controller/onboarding_controller.dart';
 import 'package:atc/src/features/authentication/model/user_model.dart';
 import 'package:atc/src/features/authentication/repository/auth_db_helper.dart';
 import 'package:atc/src/features/authentication/repository/aux_functions.dart';
+import 'package:atc/src/features/authentication/screens/onboarding.dart';
+import 'package:atc/src/features/authentication/screens/welcome.dart';
+import 'package:atc/src/features/home/screen/home.dart';
+import 'package:atc/src/features/hostel_finder/screen/hostelfinder_home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,22 +19,67 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthHelper extends GetxController {
   final _auth = FirebaseAuth.instance;
   final _fireStore = FirebaseFirestore.instance;
-
-  late final Rx<User?> firebaseUser;
   static String uuid = "";
+  late final Rx<User?> firebaseUser;
+
+
+    @override
+  void onReady() {
+    firebaseUser = Rx<User?>(_auth.currentUser);
+    firebaseUser.bindStream(_auth.userChanges());
+    ever(firebaseUser, _setInitialScreen);
+  }
+
+   _setInitialScreen(User? user) async {
+    if (user != null) {
+      Future.delayed(const Duration(seconds: 1), () {
+        Get.offAll(
+            transition: Transition.cupertinoDialog,
+            duration: const Duration(milliseconds: 700),
+             Home());
+      });
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool isFirstTimeUser = prefs.getBool("firstimer") ?? true;
+      if (isFirstTimeUser) {
+        Future.delayed(const Duration(seconds: 1), () {
+          Get.offAll(
+              transition: Transition.cupertinoDialog,
+              duration: const Duration(milliseconds: 700),
+               Onboarding(), 
+              binding: BindingsBuilder(() {
+            Get.put(OnBoardingController); // Provide the controller here
+          }));
+        });
+      } else {
+        Future.delayed(const Duration(seconds: 1), () {
+          Get.offAll(
+              transition: Transition.cupertinoDialog,
+              duration: const Duration(milliseconds: 700),
+              const Welcome());
+        });
+      }
+    }
+  }
+
+  Future<void> signoutUser() async => _auth.signOut();
+
+
+
+
+
+
+
 
   Future<User?> getCurrentUser() async {
     return _auth.currentUser;
   }
-
   Future<void> signUp(String name, String email, String phone, String password,
       String? nextPage, String arg) async {
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
       await saveToFireStore(name, email, phone);
-      
-      Get.toNamed(nextPage!);
+      Get.offNamed(nextPage!);
     } on FirebaseAuthException catch (e) {
       switch (e.code.toString()) {
         case "email-already-in-use":
@@ -127,7 +177,4 @@ class AuthHelper extends GetxController {
     }
   }
 
-  Future<void> signOut() async {
-    _auth.signOut();
-  }
 }

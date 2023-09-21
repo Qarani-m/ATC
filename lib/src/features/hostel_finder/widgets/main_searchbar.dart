@@ -10,12 +10,13 @@ import 'package:atc/src/constants/colors.dart';
 
 
 class SearchField extends StatelessWidget {
-  const SearchField({
+   SearchField({
     super.key,
-    required  this.hostelFinderController,
   });
 
-  final HostelFinderController hostelFinderController;
+  SearchBarController searchBarcontroller = Get.put(SearchBarController());
+  HostelFinderController hostelFinderController = Get.put(HostelFinderController());
+
 
   @override
   Widget build(BuildContext context) {

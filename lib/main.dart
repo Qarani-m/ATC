@@ -1,9 +1,12 @@
 import 'package:atc/firebase_options.dart';
 import 'package:atc/src/constants/colors.dart';
+import 'package:atc/src/features/authentication/repository/auth_helper.dart';
 import 'package:atc/src/features/authentication/screens/forgot_password.dart';
 import 'package:atc/src/features/authentication/screens/login.dart';
+import 'package:atc/src/features/authentication/screens/logo.dart';
 import 'package:atc/src/features/authentication/screens/signup.dart';
-import 'package:atc/src/features/hostel_finder/screen/home_page.dart';
+import 'package:atc/src/features/home/screen/home.dart';
+import 'package:atc/src/features/hostel_finder/screen/hostelfinder_home.dart';
 import 'package:atc/src/features/hostel_finder/screen/hostel_details.dart';
 import 'package:atc/src/features/hostel_finder/screen/review_page.dart';
 import 'package:atc/src/features/hostel_finder/screen/search_page.dart';
@@ -20,18 +23,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-        statusBarColor: AppColors.whiteColor,
-        statusBarIconBrightness: Brightness.light
+        statusBarColor:Colors.transparent,
+        statusBarIconBrightness: Brightness.dark
         ),
   );
   GoogleFonts.config.allowRuntimeFetching = false;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
-  // .then((value) => Get.put(AuthHelper()));
+  ).then((value) => Get.put(AuthHelper()));
   await SharedPreferences.getInstance();
-  print(ThemeMode);
   runApp(const MyApp());
 }
 
@@ -50,10 +51,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppThemes.lightTheme(),
         darkTheme: AppThemes.darkTheme(),
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.system,
         initialBinding: AppBindings(),
-        initialRoute: "/",
+        initialRoute: "/logo",
         getPages: [
+          GetPage(name: "/logo", page: () => Logo()),
+          GetPage(name: "/home", page: () => Home()),
           GetPage(name: "/", page: () => HostelFinderHome()),
           GetPage(name: "/hostelDetails", page: () => const HostelDetails()),
           GetPage(name: "/reviewPage", page: () => ReviewPage()),

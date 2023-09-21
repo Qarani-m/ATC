@@ -3,6 +3,7 @@
 import 'package:atc/src/constants/image_strings.dart';
 import 'package:atc/src/constants/text_strings.dart';
 import 'package:atc/src/features/hostel_finder/controller/hostel_finder_controller.dart';
+import 'package:atc/src/features/hostel_finder/controller/search_controller.dart';
 import 'package:atc/src/features/hostel_finder/models/hostel_model.dart';
 import 'package:atc/src/features/hostel_finder/widgets/main_filter.dart';
 import 'package:atc/src/features/hostel_finder/widgets/main_hostel.dart';
@@ -15,8 +16,8 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class HostelFinderHome extends StatelessWidget {
   HostelFinderHome({super.key});
-  final hostelFinderController = Get.find<HostelFinderController>();
-
+  HostelFinderController hostelFinderController = Get.put(HostelFinderController());
+  SearchBarController searchBarcontroller = Get.put(SearchBarController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,8 +44,7 @@ class HostelFinderHome extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SearchField(
-                            hostelFinderController: hostelFinderController),
+                        SearchField(),
                         SizedBox(
                           height: 30.h,
                         ),
@@ -86,6 +86,10 @@ class HostelFinderHome extends StatelessWidget {
                             }),
                           ),
                         ),
+                        GestureDetector(
+                          onTap: (){hostelFinderController.signOut();},
+                          child: Text("logout"),
+                        )
                       ],
                     ),
                   ),
