@@ -45,38 +45,6 @@ As students at CU, we often find it challenging to access essential information 
   - Receive notifications for urgent announcements.
 - **Purpose**: To provide students with a reliable source of information and keep them connected with the university community.
 
-## Contribution Rules
-
-We welcome contributions from fellow students and developers who are passionate about improving the university experience. Here are some guidelines for contributing:
-
-1. **Tech Stack**:
-   - Mobile Development: Dart Flutter for Android app development.
-   - Web Backend: Java Spring for API development.
-   - Web FrontEnd: React.js for web interface
-   - Database: Firebase Firestore for data storage.
-
-2. **Getting Started**:
-   - Clone the repository and set up the development environment.
-   - Refer to the [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions on setting up your local development environment.
-
-3. **Code Quality**:
-   - Write clean, well-documented code.
-   - Follow best practices for Dart, Flutter,React and Java Spring.
-   - Ensure that your code is tested, and existing tests pass.
-
-4. **Branching**:
-   - Create a new branch for your work: `git checkout -b feature/your-feature-name`.
-   - Make your changes and commit them with clear, descriptive messages.
-   - Push your changes to your fork: `git push origin feature/your-feature-name`.
-   - Create a pull request to the main repository, describing your changes and their purpose.
-
-5. **Reviews**:
-   - Your pull requests will be reviewed by maintainers or other contributors. Be prepared to make changes based on their feedback.
-
-6. **License**:
-   - By contributing to this project, you agree that your contributions will be licensed under the project's chosen open-source license.
-   - We've not choosen any yet 😅so......we'll do so once we understand what any of mean 
-
 ## Let's Make Campus Life Easier!
 
 We believe that together, we can create a fantastic resource that simplifies campus life for all students at CU. Join us in building the ATC (All Things Chuka) app and make a lasting impact on our university community.
