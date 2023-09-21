@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 
 class HostelFinderController extends GetxController {
   final _fireStore = FirebaseFirestore.instance;
-  // Text editing and focus management
+  AuthHelper authHelper = Get.put(AuthHelper());
   final TextEditingController searchController = TextEditingController();
   final FocusNode searchBarFocusNode = FocusNode();
   final RxBool showSearchIcon = true.obs;
@@ -158,10 +158,17 @@ class HostelFinderController extends GetxController {
   }
 
   RxInt activeDetailsFilter = 0.obs;
+  RxInt reviewCount = 0.obs;
+  
 
   void changeActiveDetailsFilter(int i) {
     activeDetailsFilter.value = i;
           print(activeDetailsFilter.value);
+  }
+
+  void signOut(){
+    authHelper.signoutUser();
+
   }
 
   void goBack() {

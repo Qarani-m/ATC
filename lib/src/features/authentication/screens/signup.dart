@@ -152,6 +152,7 @@ class LoginTextField extends StatelessWidget {
           color: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(49.r)),
       child: TextField(
+        style:Theme.of(context).textTheme.bodySmall ,
         controller: controller,
           obscuringCharacter: '●',
         obscureText: obscureText,

@@ -43,18 +43,15 @@ class HostelDetails extends StatelessWidget {
   }
 }
 
-//  HostelDetailsMain(hostelFinderController: hostelFinderController)
 class HostelDetailsMain extends StatelessWidget {
   const HostelDetailsMain({
     super.key,
     required this.hostelFinderController,
     required this.model,
-    //  this.reviewModel=constReviewModel()
   });
 
   final HostelFinderController hostelFinderController;
   final HostelModel model;
-  // final ReviewModel reviewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +101,10 @@ class HostelDetailsMain extends StatelessWidget {
                             child: CircleAvatar(
                               radius: 25.r,
                               backgroundColor: AppColors.whiteColor,
-                              child: const Icon(Icons.arrow_back),
+                              child: const Icon(
+                                Icons.arrow_back,
+                                color: AppColors.secondaryColor,
+                              ),
                             ),
                           ),
                         ),
@@ -122,7 +122,7 @@ class HostelDetailsMain extends StatelessWidget {
                                 effect: WormEffect(
                                     dotHeight: 5.0.h,
                                     dotWidth: 12.w,
-                                    dotColor: AppColors.primaryColor,
+                                    dotColor: AppColors.whiteColor,
                                     activeDotColor: AppColors.accentColor),
                               ),
                             ),
@@ -231,7 +231,7 @@ class HostelDetailsMain extends StatelessWidget {
                     SizedBox(
                       height: 20.h,
                     ),
-                    const Text("Reviews (100)"),
+                    const Text("Reviews"),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -282,16 +282,24 @@ class HostelDetailsMain extends StatelessWidget {
                         }
                         List<QueryDocumentSnapshot> documents =
                             snapshot.data!.docs;
-                        return Obx(()=>Column(
+                        hostelFinderController.reviewCount.value =
+                            documents.length;
+                        return Obx(
+                          () => Column(
                             children: List.generate(documents.length, (index) {
-                              String starRating = documents[index]['starRating'];
-                              double starRatingValue =double.tryParse(starRating) ?? 0.0;
-                              if (hostelFinderController.activeDetailsFilter.value ==1) {
+                              String starRating =
+                                  documents[index]['starRating'];
+                              double starRatingValue =
+                                  double.tryParse(starRating) ?? 0.0;
+                              if (hostelFinderController
+                                      .activeDetailsFilter.value ==
+                                  1) {
                                 if (starRatingValue > 2.5) {
                                   return OneReview(
                                     model: ReviewModel(
                                       date: documents[index]['date'],
-                                      starRating: documents[index]['starRating'],
+                                      starRating: documents[index]
+                                          ['starRating'],
                                       userId: documents[index]['userId'],
                                       writtenReview: documents[index]
                                           ['writtenReview'],
@@ -300,12 +308,15 @@ class HostelDetailsMain extends StatelessWidget {
                                 } else {
                                   return Container();
                                 }
-                              } else if (hostelFinderController.activeDetailsFilter.value ==2) {
+                              } else if (hostelFinderController
+                                      .activeDetailsFilter.value ==
+                                  2) {
                                 if (starRatingValue < 2.5) {
                                   return OneReview(
                                     model: ReviewModel(
                                       date: documents[index]['date'],
-                                      starRating: documents[index]['starRating'],
+                                      starRating: documents[index]
+                                          ['starRating'],
                                       userId: documents[index]['userId'],
                                       writtenReview: documents[index]
                                           ['writtenReview'],
@@ -342,10 +353,25 @@ class HostelDetailsMain extends StatelessWidget {
           height: 72.h,
           width: 390.w,
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.whiteColor,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.r),
-                  topRight: Radius.circular(20.r))),
+                  topRight: Radius.circular(20.r)),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.secondaryColor.withOpacity(0.02),
+                  offset: const Offset(4, 0),
+                  blurRadius: 4.0,
+                ),
+                const BoxShadow(
+                  color: Colors.transparent,
+                  offset: Offset(0, -5),
+                ),
+                const BoxShadow(
+                  color: Colors.transparent,
+                  offset: Offset(0, 5),
+                ),
+              ]),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -377,8 +403,10 @@ class HostelDetailsMain extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30.r)),
                     child: Text(
                       "Leave a review",
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.whiteColor, fontSize: 16.sp),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: Colors.white, fontSize: 16.sp),
                     ),
                   ))
             ],
@@ -442,7 +470,6 @@ class OneReview extends StatelessWidget {
           SizedBox(
             height: 5.h,
           ),
-          Container(color: AppColors.primaryColor, width: 390.w, height: 1.h),
           SizedBox(
             height: 2.h,
           ),

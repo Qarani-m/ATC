@@ -1,6 +1,7 @@
 import 'package:atc/src/features/authentication/controller/login_controller.dart';
 import 'package:atc/src/features/authentication/controller/signup_controller.dart';
 import 'package:atc/src/features/authentication/repository/auth_helper.dart';
+import 'package:atc/src/features/hostel_finder/controller/search_controller.dart';
 import 'package:atc/src/features/hostel_finder/controller/submit_review.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,7 @@ class AppBindings extends Bindings{
     Get.lazyPut<LoginController>(() =>LoginController());
     Get.lazyPut<SignUpController>(() =>SignUpController());
     Get.lazyPut<AuthHelper>(() =>AuthHelper());
+    Get.lazyPut<SearchBarController>(() =>SearchBarController());
     // Get.lazyPut<SubmitReviewController>(() =>SubmitReviewController());
   }
 

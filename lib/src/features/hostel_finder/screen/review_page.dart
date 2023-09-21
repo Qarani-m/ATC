@@ -21,6 +21,8 @@ class ReviewPage extends StatelessWidget {
     submitReviewController.hostelId.value =
     submitReviewController.hostelId.value = Get.parameters["hostelId"]??"";
     return Scaffold(
+          backgroundColor: AppColors.whiteColor,
+
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(left: 12.w, right: 12.w, top: 39.h),
@@ -49,7 +51,7 @@ class ReviewPage extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 25.r,
                         backgroundColor: AppColors.whiteColor,
-                        child: const Icon(Icons.arrow_back),
+                        child: const Icon(Icons.arrow_back,color: AppColors.secondaryColor,),
                       ),
                     ),
                   ),
@@ -112,20 +114,22 @@ class ReviewPage extends StatelessWidget {
                     )
                   ]),
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: 28.w),
+                    padding: EdgeInsets.only(bottom: 1.w),
                     child: TextField(
                       onChanged: (value) {
                         submitReviewController.writtenReview.value = value;
                       },
                       controller:
                           submitReviewController.writtenReviewController,
-                      maxLines: 4,
+                      maxLines: 6,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontSize: 15.sp, color: AppColors.secondaryColor),
                       cursorColor: AppColors.secondaryColor,
                       decoration: InputDecoration(
                         filled: false,
                         hintText: "Enter here",
+                        hintStyle:Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontSize: 15.sp, color: AppColors.secondaryColor) ,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15.r),
                             borderSide: const BorderSide(
@@ -156,7 +160,7 @@ class ReviewPage extends StatelessWidget {
                     child: Text(
                       "Submit",
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.whiteColor, fontSize: 16.sp),
+                          color:Colors.white, fontSize: 16.sp),
                     ),
                   )),
               SizedBox(height: 30.h),

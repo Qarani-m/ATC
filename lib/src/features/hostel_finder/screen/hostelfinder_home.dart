@@ -3,6 +3,7 @@
 import 'package:atc/src/constants/image_strings.dart';
 import 'package:atc/src/constants/text_strings.dart';
 import 'package:atc/src/features/hostel_finder/controller/hostel_finder_controller.dart';
+import 'package:atc/src/features/hostel_finder/controller/search_controller.dart';
 import 'package:atc/src/features/hostel_finder/models/hostel_model.dart';
 import 'package:atc/src/features/hostel_finder/widgets/main_filter.dart';
 import 'package:atc/src/features/hostel_finder/widgets/main_hostel.dart';
@@ -15,12 +16,12 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class HostelFinderHome extends StatelessWidget {
   HostelFinderHome({super.key});
-  final hostelFinderController = Get.find<HostelFinderController>();
-
+  HostelFinderController hostelFinderController = Get.put(HostelFinderController());
+  SearchBarController searchBarcontroller = Get.put(SearchBarController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.whiteColor,
         body: FutureBuilder(
             future: hostelFinderController.fetchAllHostelDataFromFirestore(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -43,15 +44,14 @@ class HostelFinderHome extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SearchField(
-                            hostelFinderController: hostelFinderController),
+                        SearchField(),
                         SizedBox(
                           height: 30.h,
                         ),
                         SizedBox(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(4, (index) {
+                            children: List.generate(3, (index) {
                               return FiltersHome(
                                   hostelFinderController:
                                       hostelFinderController,
@@ -72,30 +72,24 @@ class HostelFinderHome extends StatelessWidget {
                                 (index) {
                               return OneHostel(
                                 model: HostelModel(
-                                    mainImageUrl: AppImages.image1,
-                                    priceForOne: hostelFinderController
-                                            .hostelList[index].priceForOne ??
-                                        "3 billion",
-                                    name: hostelFinderController.hostelList[index].name ??
-                                        "Unknown name",
-                                    location: hostelFinderController
-                                            .hostelList[index].location ??
-                                        "Unknown location",
-                                    reviewCount: hostelFinderController
-                                            .hostelList[index].reviewCount ??
-                                        "0",
-                                    beds: hostelFinderController.hostelList[index].beds ??
-                                        "1",
-                                    hostelId:
-                                        hostelFinderController.hostelIds[index],
-                                    wifiStatus: hostelFinderController
-                                            .hostelList[index].wifiStatus ??
-                                        "0"),
+                                    mainImageUrl: hostelFinderController.hostelList[index].mainImageUrl,
+                                    priceForOne: hostelFinderController.hostelList[index].priceForOne ??"3 billion",
+                                    name: hostelFinderController.hostelList[index].name ??"Unknown name",
+                                    location: hostelFinderController.hostelList[index].location ??"Unknown location",
+                                    reviewCount: hostelFinderController.hostelList[index].reviewCount ??"0",
+                                    beds: hostelFinderController.hostelList[index].beds ??"1",
+                                    hostelId:hostelFinderController.hostelIds[index],
+                                    wifiStatus: hostelFinderController.hostelList[index].wifiStatus ??"0"
+                                  ),
                                 hostelFinderController: hostelFinderController,
                               );
                             }),
                           ),
                         ),
+                        GestureDetector(
+                          onTap: (){hostelFinderController.signOut();},
+                          child: Text("logout"),
+                        )
                       ],
                     ),
                   ),
