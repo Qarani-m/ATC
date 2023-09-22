@@ -37,14 +37,14 @@ As students at CU, we often find it challenging to access essential information 
   - Check the daily menu at the school's mess hall.
 - **Purpose**: To make it convenient for students to plan their meals and purchases while considering their budget.
 
-#### News
-- **Description**: Staying updated with the latest news and announcements from the university is essential. The News feature will allow students to access news articles, radio broadcasts, and other important announcements.
+<!-- #### News
+ **Description**: Staying updated with the latest news and announcements from the university is essential. The News feature will allow students to access news articles, radio broadcasts, and other important announcements.
 - **Functionality**:
   - Read news articles and updates.
   - Listen to radio broadcasts from the school's radio station.
   - Receive notifications for urgent announcements.
 - **Purpose**: To provide students with a reliable source of information and keep them connected with the university community.
-
+-->
 ## Let's Make Campus Life Easier!
 
 We believe that together, we can create a fantastic resource that simplifies campus life for all students at CU. Join us in building the ATC (All Things Chuka) app and make a lasting impact on our university community.
